@@ -1,0 +1,71 @@
+📘 Monday.com + Excel → MySQL ETL Pipeline
+🧩 Overview
+
+A Python ETL pipeline that automates data integration from Monday.com and Excel deal files into a MySQL database.
+Each Excel file represents one deal and includes seven sheets for financial and operational details.
+The pipeline cleans, maps, and loads data across multiple related tables, ready for Power BI analysis.
+
+⚙️ Key Features
+
+GraphQL API integration with Monday.com
+
+Excel ingestion from a folder of per-deal files
+
+Automatic ID lookups for Clients, Products, UoM, etc.
+
+Upsert logic (INSERT ... ON DUPLICATE KEY UPDATE)
+
+Logging for inserted/updated records per deal
+
+Covers 7 tables:
+deal_overview, deal_stock_cost, deal_transport_cost,
+deal_ad_hoc_cost, deal_sales_line, deal_cash_outflow, deal_cash_inflow
+
+🗂️ Data Flow
+Source	Excel Sheet	MySQL Table	Purpose
+Monday.com	—	deal_overview	Deal metadata
+Excel	deal_overview	deal_overview	Financial summary
+Excel	stock_cost	deal_stock_cost	Stock and product costs
+Excel	transport_cost	deal_transport_cost	Transport & logistics
+Excel	ad_hoc_cost	deal_ad_hoc_cost	Miscellaneous costs
+Excel	sales_tbl_One	deal_sales_line	Sales & profit breakdown
+Excel	cf_purch	deal_cash_outflow	Purchase cash flow
+Excel	cf_sales	deal_cash_inflow	Sales cash flow
+🧾 Configuration
+
+Edit inside the script before running:
+
+MONDAY_API_KEY = "YOUR_MONDAY_API_TOKEN"
+BOARD_ID = 123456789
+EXCEL_FOLDER = r"C:\path\to\deal_excels"
+DB_CONFIG = {"host": "localhost", "user": "root", "password": "your_password", "database": "your_database"}
+
+🏃‍♂️ Run the Script
+pip install pandas requests mysql-connector-python openpyxl
+python main_etl_script.py
+
+
+Creates logs like:
+
+✅ Loaded deal D001 — Stock:6 Transport:2 AdHoc:1 Sales:10 Outflow:3 Inflow:4
+
+🧠 Highlights
+
+ETL design (Extract → Transform → Load)
+
+GraphQL & API integration
+
+SQL data modeling & referential integrity
+
+Logging and transaction control
+
+Portfolio-ready data engineering example
+
+👤 Author
+
+Your Name
+Data Engineer / BI Developer
+LinkedIn
+ • GitHub
+
+Would you like me to generate a matching short README for the SQL setup folder (to e
