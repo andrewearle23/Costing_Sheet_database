@@ -87,7 +87,7 @@ The schema is normalized to **3rd Normal Form (3NF)** and includes key functiona
 
 ### 🖼️ Visual ERD 
 
-![ERD Diagram](docs/erd_diagram.png)
+![ERD Diagram](erd_diagram.png)
 
 
 ---
@@ -156,4 +156,5 @@ Released under the MIT License — free for personal and educational use.
 ✍️ Author
 Andrew Earle
 📧 andrew@andrewearle.co.uk
+
 💼 Data Engineering | Business Intelligence | MySQL & Power BI
