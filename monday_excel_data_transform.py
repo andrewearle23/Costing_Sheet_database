@@ -1,12 +1,15 @@
 import pandas as pd
 import requests
 import mysql.connector
+import logging
+from datetime import datetime
 
 # === CONFIGURATION ===
 MONDAY_API_KEY = "YOUR_MONDAY_API_TOKEN"
 BOARD_ID = 123456789  # Replace with your Monday board ID
 EXCEL_FILE = "deal_overview.xlsx"
 TABLE_NAME = "deal_overview"
+LOG_FILE = f"etl_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
 
 DB_CONFIG = {
     "host": "localhost",
@@ -15,39 +18,61 @@ DB_CONFIG = {
     "database": "your_database"
 }
 
-# === STEP 1: Get data from Monday.com ===
-query = f"""
-{{
-  boards (ids: {BOARD_ID}) {{
-    items_page(limit: 200) {{
-      items {{
-        name
-        column_values {{
-          id
-          title
-          text
+# === LOGGING SETUP ===
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[
+        logging.FileHandler(LOG_FILE, mode='w'),
+        logging.StreamHandler()
+    ]
+)
+
+logging.info("🚀 ETL process started")
+
+# === STEP 1: Fetch all data from Monday.com (handle pagination) ===
+def fetch_monday_items(board_id):
+    items = []
+    cursor = None
+    headers = {"Authorization": MONDAY_API_KEY, "Content-Type": "application/json"}
+
+    while True:
+        query = f"""
+        {{
+          boards(ids: {board_id}) {{
+            items_page(limit: 200, cursor: {f'"{cursor}"' if cursor else 'null'}) {{
+              cursor
+              items {{
+                name
+                column_values {{
+                  id
+                  title
+                  text
+                }}
+              }}
+            }}
+          }}
         }}
-      }}
-    }}
-  }}
-}}
-"""
+        """
 
-headers = {"Authorization": MONDAY_API_KEY, "Content-Type": "application/json"}
-response = requests.post("https://api.monday.com/v2", json={"query": query}, headers=headers)
-data = response.json()
+        response = requests.post("https://api.monday.com/v2", json={"query": query}, headers=headers)
+        data = response.json()
 
-items = data["data"]["boards"][0]["items_page"]["items"]
+        page = data["data"]["boards"][0]["items_page"]
+        items.extend(page["items"])
+        cursor = page.get("cursor")
+
+        if not cursor:
+            break
+
+    logging.info(f"✅ Retrieved {len(items)} items from Monday.com board {board_id}")
+    return items
+
+items = fetch_monday_items(BOARD_ID)
 
 columns_needed = [
-    "Client",
-    "Product",
-    "Sales Rep",
-    "Deal Status",
-    "Date Created",
-    "Date Closed",
-    "Quote Submitted",
-    "Quote Due Date"
+    "Client", "Product", "Sales Rep", "Deal Status",
+    "Date Created", "Date Closed", "Quote Submitted", "Quote Due Date"
 ]
 
 rows = []
@@ -111,7 +136,7 @@ merged_df["profit_after_fc_pct"] = (merged_df["profit_after_fc"] / merged_df["sa
 
 merged_df = merged_df.where(pd.notnull(merged_df), None)
 
-# === STEP 8: Upsert (Insert or Update) ===
+# === STEP 8: UPSERT (Insert or Update) ===
 insert_sql = f"""
 INSERT INTO {TABLE_NAME} (
     deal_no, sales_rep_id, client_id, product_ref, status_code,
@@ -142,12 +167,26 @@ ON DUPLICATE KEY UPDATE
     profit_after_fc_pct = VALUES(profit_after_fc_pct);
 """
 
+inserted = 0
+updated = 0
+
 for _, row in merged_df.iterrows():
-    cursor.execute(insert_sql, row.to_dict())
+    try:
+        cursor.execute(insert_sql, row.to_dict())
+        if cursor.rowcount == 1:
+            inserted += 1
+            logging.info(f"🆕 Inserted deal: {row['deal_no']}")
+        else:
+            updated += 1
+            logging.info(f"♻️ Updated deal: {row['deal_no']}")
+    except Exception as e:
+        logging.error(f"❌ Error processing deal {row['deal_no']}: {e}")
 
 conn.commit()
 cursor.close()
 conn.close()
 
-print("✅ Monday.com + Excel data successfully synced to MySQL.")
+logging.info(f"✅ ETL completed successfully: {inserted} inserted, {updated} updated.")
+logging.info(f"📄 Log saved to {LOG_FILE}")
+
 
