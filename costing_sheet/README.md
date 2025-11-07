@@ -7,7 +7,7 @@ The solution leverages **VBA**, **Power Query**, and **SAP SQL Queries** to buil
 
 ### 🧭 Objective
 
-Create a **standardized costing template** for PTA (Product Trading Agreements) that:
+Create a **standardized costing template** that:
 
 - Eliminates inaccuracies in cost calculations  
 - Handles complex deal structures  
@@ -205,5 +205,6 @@ ETL / Data Prep	Power Query (M Language)
 Database	SAP SQL Server Queries
 Reporting / Output	PDF, Outlook Email Integration
 Security	Sheet Protection + Controlled Access
+
 
 
