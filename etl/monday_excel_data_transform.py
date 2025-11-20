@@ -24,7 +24,7 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s",
     handlers=[logging.FileHandler(LOG_FILE, mode='w'), logging.StreamHandler()]
 )
-logging.info("🚀 ETL process started")
+logging.info("ETL process started")
 
 # === STEP 1: FETCH MONDAY.COM DEAL DATA ===
 def fetch_monday_items(board_id):
@@ -240,15 +240,16 @@ for f in files:
         total["inflow"] += len(inflow)
 
         conn.commit()
-        logging.info(f"✅ Loaded deal {merged['deal_no'].iloc[0]} — Stock:{len(stock)} Transport:{len(transport)} AdHoc:{len(adhoc)} Sales:{len(sales)} Outflow:{len(outflow)} Inflow:{len(inflow)}")
+        logging.info(f"Loaded deal {merged['deal_no'].iloc[0]} — Stock:{len(stock)} Transport:{len(transport)} AdHoc:{len(adhoc)} Sales:{len(sales)} Outflow:{len(outflow)} Inflow:{len(inflow)}")
 
     except Exception as e:
         logging.error(f"❌ Error processing {f}: {e}")
 
 cursor.close()
 conn.close()
-logging.info(f"✅ ETL Complete — Deals:{total['deals']} Stock:{total['stock']} Transport:{total['transport']} AdHoc:{total['adhoc']} Sales:{total['sales']} Outflow:{total['outflow']} Inflow:{total['inflow']}")
+logging.info(f"ETL Complete — Deals:{total['deals']} Stock:{total['stock']} Transport:{total['transport']} AdHoc:{total['adhoc']} Sales:{total['sales']} Outflow:{total['outflow']} Inflow:{total['inflow']}")
 logging.info(f"📄 Log saved to {LOG_FILE}")
+
 
 
 
