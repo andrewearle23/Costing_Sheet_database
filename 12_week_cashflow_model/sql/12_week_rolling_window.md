@@ -1,0 +1,4 @@
+CREATE OR REPLACE VIEW cashflow_12week AS
+SELECT *
+FROM cashflow_weekly
+WHERE forecast_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 84 DAY);
