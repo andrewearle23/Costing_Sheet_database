@@ -1,0 +1,86 @@
+📦 Supply Chain Costing System
+Excel Automation + Python ETL + MySQL Database
+
+This project delivers a complete end-to-end costing solution combining Excel automation, Python ETL, and a fully normalised MySQL database.
+It replaces fragmented costing spreadsheets with a centralised, automated, and auditable system used to calculate deal costs, gross profit, and cash-flow projections.
+
+🚀 Overview
+
+The system integrates multiple data sources to produce accurate and consistent costing outputs:
+
+Excel Costing Tool (Power Query + VBA automation)
+
+SAP SQL Queries for real-time master data
+
+Python ETL Pipeline (Monday.com → Excel → MySQL)
+
+MySQL Supply Chain Costing Database for reporting & analysis
+
+It supports finance, sales, and operations by creating a single source of truth for stock, transport, ad-hoc cost, sales, cash flow, and GP calculations.
+
+🧩 Key Components
+1️⃣ Excel Costing Workbook
+
+Automated costing template built with Power Query
+
+41 VBA modules for quoting, PDF export, Outlook emails, sheet protection, and logging
+
+Captures full deal structure (stock, transport, ad-hoc, finance, GP)
+
+Generates single- and multi-product quotes in minutes
+
+2️⃣ Python ETL Pipeline
+
+Fetches deal information from Monday.com via GraphQL API
+
+Merges with Excel-based cost sheets
+
+Cleans, transforms, and validates all values
+
+Loads into MySQL using upsert logic
+
+Full logging for traceability
+
+3️⃣ MySQL Costing Database
+
+Fully normalised 3NF schema
+
+Tables for deals, stock cost, transport cost, ad-hoc cost, sales lines, cash flows
+
+Lookup tables for products, clients, sales reps, uom, deal status, and transporters
+
+Supports financial modelling and Power BI reporting
+
+🛠️ Tech Stack
+
+Excel: Power Query (M), VBA, Pivot Tables
+
+Python: Pandas, Requests, openpyxl, mysql-connector
+
+Database: MySQL 8.0
+
+APIs: Monday.com GraphQL
+
+Reporting: Power BI (GP analysis, sales conversion, forecasting)
+
+📊 What the System Delivers
+
+Standardised costing across all deals
+
+Automated quote generation (PDF + email)
+
+Centralised and auditable deal history
+
+Integrated view of cost, sales, and cash flow
+
+Power BI dashboards for profitability insights
+
+🧠 Impact
+
+Reduced quote turnaround time from hours to minutes
+
+Eliminated version-control issues across costing files
+
+Improved financial accuracy and forecasting
+
+Enabled advanced reporting from a clean, structured database
