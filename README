@@ -1,12 +1,14 @@
 📦 Supply Chain Costing System
-Excel Automation + Python ETL + MySQL Database
 
-This project delivers a complete end-to-end costing solution combining Excel automation, Python ETL, and a fully normalised MySQL database.
+Excel Automation + Python ETL + MySQL Database + Power BI Analytics
+
+This project delivers a complete end-to-end costing and analytics ecosystem combining Excel automation, Python ETL, a fully normalised MySQL database, and Power BI forecasting dashboards.
+
 It replaces fragmented costing spreadsheets with a centralised, automated, and auditable system used to calculate deal costs, gross profit, and cash-flow projections.
 
 🚀 Overview
 
-The system integrates multiple data sources to produce accurate and consistent costing outputs:
+The system integrates multiple data sources to produce accurate and consistent costing outputs, forecasts, and KPIs:
 
 Excel Costing Tool (Power Query + VBA automation)
 
@@ -14,73 +16,214 @@ SAP SQL Queries for real-time master data
 
 Python ETL Pipeline (Monday.com → Excel → MySQL)
 
-MySQL Supply Chain Costing Database for reporting & analysis
+MySQL Supply Chain Costing Database
 
-It supports finance, sales, and operations by creating a single source of truth for stock, transport, ad-hoc cost, sales, cash flow, and GP calculations.
+Power BI Dashboards (GP analysis, sales conversion, 12-week cashflow forecast, monthly KPIs)
+
+This architecture supports finance, sales, and operations by providing a single source of truth for stock, transport, ad-hoc cost, sales, cash flow, and profitability.
 
 🧩 Key Components
 1️⃣ Excel Costing Workbook
 
-Automated costing template built with Power Query
+✔ Automated costing template built with Power Query
+✔ 40+ VBA modules (quoting, PDF export, Outlook emails, sheet protection, logging)
+✔ Captures full deal structure:
 
-41 VBA modules for quoting, PDF export, Outlook emails, sheet protection, and logging
+Stock cost
 
-Captures full deal structure (stock, transport, ad-hoc, finance, GP)
+Transport
 
-Generates single- and multi-product quotes in minutes
+Ad-hoc cost
+
+Finance
+
+Gross Profit
+
+✔ Generates single- & multi-product quotes in minutes
 
 2️⃣ Python ETL Pipeline
 
-Fetches deal information from Monday.com via GraphQL API
-
-Merges with Excel-based cost sheets
-
-Cleans, transforms, and validates all values
-
-Loads into MySQL using upsert logic
-
-Full logging for traceability
+✔ Pulls deal data from Monday.com GraphQL API
+✔ Merges with Excel costing sheets
+✔ Cleans, validates, and transforms data
+✔ Loads into MySQL using incremental upsert logic
+✔ Full logging for traceability and auditability
 
 3️⃣ MySQL Costing Database
 
-Fully normalised 3NF schema
+✔ Fully normalised 3NF structure
+✔ Tables include:
 
-Tables for deals, stock cost, transport cost, ad-hoc cost, sales lines, cash flows
+deal, deal_sales_line, deal_stock_cost
 
-Lookup tables for products, clients, sales reps, uom, deal status, and transporters
+deal_transport_cost, deal_ad_hoc_cost
 
-Supports financial modelling and Power BI reporting
+deal_cash_inflow, deal_cash_outflow
+
+product, client, sales_rep, uom, deal_status
+
+✔ Supports financial modelling & Power BI reporting
 
 🛠️ Tech Stack
-
-Excel: Power Query (M), VBA, Pivot Tables
-
-Python: Pandas, Requests, openpyxl, mysql-connector
-
-Database: MySQL 8.0
-
-APIs: Monday.com GraphQL
-
-Reporting: Power BI (GP analysis, sales conversion, forecasting)
-
+Layer	Technology
+Front-End	Excel, Power Query (M), VBA
+ETL	Python (pandas, requests, openpyxl, mysql-connector)
+Database	MySQL 8.0
+APIs	Monday.com GraphQL
+Reporting	Power BI
+Version Control	GitHub
 📊 What the System Delivers
 
 Standardised costing across all deals
 
-Automated quote generation (PDF + email)
+Automated quote generation (PDF + Email)
 
 Centralised and auditable deal history
 
-Integrated view of cost, sales, and cash flow
+Integrated financial view of cost → sales → cashflow
 
-Power BI dashboards for profitability insights
+Power BI dashboards for profitability, forecasting, and KPIs
 
-🧠 Impact
+🧠 Business Impact
 
-Reduced quote turnaround time from hours to minutes
+✔ Reduced quote turnaround time from hours to minutes
+✔ Eliminated version-control issues across costing files
+✔ Improved financial accuracy and cost visibility
+✔ Enabled real-time sales & profitability analytics
+✔ Introduced forecasting for cashflow and monthly performance
 
-Eliminated version-control issues across costing files
+🔮 Power BI Reporting Models
 
-Improved financial accuracy and forecasting
+This repository includes two major analytical models powering dashboards used by Finance, Sales, and Leadership.
 
-Enabled advanced reporting from a clean, structured database
+📈 1. 12-Week Rolling Cashflow Forecast
+
+A forecasting model that projects cash inflows, cash outflows, and net cash over the next 12 weeks, per deal.
+
+🔧 SQL Layer (Summary)
+
+The MySQL backend creates:
+
+A unified cashflow event table (deposit + balance events)
+
+A weekly bucket view (ISO week start)
+
+A 12-week filtered dataset for Power BI
+
+This transforms inflow/outflow dates into predictable weekly liquidity projections.
+
+📊 Power BI Model
+
+Date table with ISO week logic
+
+Weekly cashflow table
+
+Relationships to Deals, Product, Client, Sales Rep
+
+DAX measures for:
+
+Cash Inflow
+
+Cash Outflow
+
+Net Cash
+
+Conditional formatting (Red ↓ / Green ↑)
+
+📟 Dashboard Features
+
+Matrix view with Week Numbers & Week Start Dates
+
+Cash Outflow block (red), Inflow block (green)
+
+Deal-level breakdown
+
+Total Cash (Net) per week
+
+Filters:
+
+Product
+
+Client
+
+Sales Rep
+
+Used by finance/treasury to monitor upcoming liquidity requirements.
+
+📅 2. Monthly KPI Performance Report
+
+A monthly reporting layer for performance tracking of:
+
+GP Created
+
+GP Quoted
+
+GP Won
+
+GP Lost
+
+Deal volumes
+
+Sales totals
+
+Profitability measures
+
+🔧 SQL Layer (Summary)
+
+SQL views compute monthly aggregates:
+
+One row per KPI per month
+
+Aggregations of:
+
+Deal Count
+
+Sales Total
+
+Gross Profit
+
+Profit After Finance
+
+📊 Power BI Model
+
+Month-level reporting table with:
+
+Month Start
+
+KPI Type
+
+GP & Revenue Metrics
+
+Date table with Year, Month, Month Name
+
+DAX calculations for visuals (MoM change, trendlines)
+
+📟 Dashboard Features
+
+KPI Cards (GP Created / Quoted / Won / Lost)
+
+Monthly trendlines
+
+Deal Status breakdowns
+
+Slicers for Product, Client, Sales Rep
+
+
+🏁 Summary
+
+This project represents a complete data engineering + analytics + automation solution for supply chain costing.
+It demonstrates capability across:
+
+Database design
+
+Python ETL engineering
+
+Excel/VBA automation
+
+Power BI modelling
+
+Financial forecasting
+
+End-to-end system integration
+
+Perfect for operational analytics, finance teams, and production-scale reporting environments.
