@@ -6,6 +6,18 @@ This project delivers a complete end-to-end costing and analytics ecosystem comb
 
 It replaces fragmented costing spreadsheets with a centralised, automated, and auditable system used to calculate deal costs, gross profit, and cash-flow projections.
 
+🔒 Data Privacy & Security Notice
+
+All datasets, examples, and sample records used in this repository originate from real operational processes, but no real company data is exposed.
+For security and confidentiality:
+
+All deal numbers, client names, product codes, transporters, routes, quantities, and financial values have been fully anonymised.
+
+Sensitive internal references have been replaced with synthetic values that preserve structure and realism.
+
+No proprietary, confidential, or personally identifiable information is present in this repository.
+
+This ensures the project accurately reflects real-world complexity without compromising any organisational data security standards.
 🚀 Overview
 
 The system integrates multiple data sources to produce accurate and consistent costing outputs, forecasts, and KPIs:
