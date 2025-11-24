@@ -1,0 +1,5 @@
+status_code,description
+STAGE,Deal Staging
+QUOTE,Quote Submitted
+WON,Deal Won
+LOST,Deal Lost

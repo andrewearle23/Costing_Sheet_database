@@ -1,0 +1,14 @@
+location_id,location_name,city_code,country_code
+1,Johannesburg Depot,JHB,ZAF
+2,Durban Depot,DBN,ZAF
+3,Cape Town Depot,CPT,ZAF
+4,Lusaka Depot,LUS,ZMB
+5,Kitwe Depot,KIT,ZMB
+6,Ndola Depot,NDL,ZMB
+7,Lubumbashi Depot,LUB,COD
+8,Kolwezi Depot,KOL,COD
+9,Gaborone Depot,GAB,BWA
+10,Walvis Bay Depot,WVB,NAM
+11,Maputo Depot,MPM,MOZ
+12,Dar es Salaam Depot,DAR,TZA
+13,Luanda Depot,LAD,AGO

@@ -1,0 +1,9 @@
+client_id,client_name,payment_terms,current_exposure,credit_limit
+BEI001,Beira Exports Inc,Prepaid,322465.15,500000
+KMC001,Kamo Mining Corp,COD,212792.07,750000
+ZAM001,ZamCopper Ltd,Prepaid,277147.75,500000
+DRX001,DRX Metals Trading,Prepaid,128108.57,500000
+AFR001,Afrilogistics Group,COD,268373.52,500000
+BUL001,Bulk Commodities SA,60 Days,498396.56,1500000
+LUB001,Lubumet Resources,60 Days,685658.27,1000000
+KIT001,Kitwe Minerals,Prepaid,464162.73,750000

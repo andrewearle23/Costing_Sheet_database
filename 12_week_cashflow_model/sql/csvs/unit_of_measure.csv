@@ -1,0 +1,5 @@
+uom_id,name,shorthand
+UOM_MT,Metric Ton,MT
+UOM_KG,Kilogram,KG
+UOM_L,Litre,L
+UOM_TRIP,Truck Load,TRIP
