@@ -61,7 +61,7 @@ An interactive financial reporting interface built on top of the cashflow SQL mo
 
 Dashboard 12 week Finance Model
 
-12_week_cashflow_model/images/12_week_db_overview.png
+![12 Week DB Overview](./images/12_week_db_overview.png)
 
 Dashboard Highlights
 
@@ -168,3 +168,4 @@ DAX performs KPIs, formatting, and cumulative logic
 All data is fully synthetic and anonymised.
 
 The structure and behaviour reflect real business logic for demonstration purposes only.
+
