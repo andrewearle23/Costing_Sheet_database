@@ -1,4 +1,4 @@
-📊 12-Week Rolling Cashflow Forecast System
+# 📊 12-Week Rolling Cashflow Forecast System
 
 MySQL → Power BI Financial Analytics
 
@@ -7,7 +7,7 @@ It includes SQL-driven cashflow event logic, a normalised MySQL database, and a 
 
 All data is fully synthetic but designed to reflect realistic commercial behaviour.
 
-🧱 1. MySQL Cashflow Data Model
+## 🧱 1. MySQL Cashflow Data Model
 
 A normalised relational schema that captures all deal, pricing, client, product, and cashflow timing activity.
 
@@ -55,15 +55,13 @@ Upload your schema screenshot and update the path below.
 
 ![Database Schema](images/db_schema.png)
 
-📘 2. Power BI Cashflow Dashboard
+## 📘 2. Power BI Cashflow Dashboard
 
 An interactive financial reporting interface built on top of the cashflow SQL model.
 
-Dashboard Screenshot
+Dashboard 12 week Finance Model
 
-Upload your dashboard image and update the path below.
-
-![12-Week Cashflow Dashboard](images/cashflow_dashboard.png)
+12_week_cashflow_model/images/12_week_db_overview.png
 
 Dashboard Highlights
 
@@ -79,7 +77,7 @@ Deal-level performance table with GP%, NP%
 
 Financial-style matrix with conditional formatting
 
-🧮 3. KPI Definitions (DAX)
+## 🧮 3. KPI Definitions (DAX)
 
 These DAX measures power the top-level KPI cards.
 
@@ -113,7 +111,7 @@ MAXX(
 Active Deals :=
 DISTINCTCOUNT(cashflow_12week[deal_no])
 
-📊 4. Dashboard Visuals Explained
+## 📊 4. Dashboard Visuals Explained
 KPI Summary Bar
 
 Shows the overall cashflow strength and deal activity in the 12-week window.
@@ -153,7 +151,7 @@ Client, Product, Sales Rep
 
 Useful for bottom-up analysis.
 
-🔄 5. Cashflow Generation Workflow
+## 🔄 5. Cashflow Generation Workflow
 
 SQL computes deposit, balance, uplift, travel, and payment dates
 
@@ -168,4 +166,5 @@ DAX performs KPIs, formatting, and cumulative logic
 🔒 Data Notice
 
 All data is fully synthetic and anonymised.
+
 The structure and behaviour reflect real business logic for demonstration purposes only.
