@@ -11,76 +11,61 @@ All data is fully synthetic but designed to reflect realistic commercial behavio
 
 A normalised relational schema that captures all deal, pricing, client, product, and cashflow timing activity.
 
-Core Entities
+### Core Entities
 
-Deals (commercial contracts)
+- Deals (commercial contracts)
+- Cash inflows (deposit and balance receipts)
+- Cash outflows (supplier deposits and balances)
+- Clients, products, sales reps
+- Stock items and cost structures
+- Incoterms, deal status codes
+- Weekly calendar and ISO week mappings
 
-Cash inflows (deposit and balance receipts)
+### Key Features
 
-Cash outflows (supplier deposits and balances)
+- SQL logic generates forecasted cashflow events
+- Unified inflow/outflow view (**cashflow_forecast_events**)
+- Weekly aggregation (**cashflow_weekly**) aligned to ISO week
+- Rolling 12-week reporting view (**cashflow_12week**)
+- Complete referential integrity between all entities
 
-Clients, products, sales reps
+### Use Cases
 
-Stock items and cost structures
+- Liquidity planning (12-week horizon)
+- Cashflow risk identification
+- Client & product cash contribution analysis
+- Treasury visibility and deal cash dependency
 
-Incoterms, deal status codes
+### 🖼️ Database Schema
 
-Weekly calendar and ISO week mappings
+![ERD Diagram](../sql/erd_diagram.png)
 
-Key Features
-
-SQL logic generates forecasted cashflow events
-
-Unified inflow/outflow view (cashflow_forecast_events)
-
-Weekly aggregation (cashflow_weekly) aligned to ISO week
-
-Rolling 12-week reporting view (cashflow_12week)
-
-Complete referential integrity between all entities
-
-Use Cases
-
-Liquidity planning (12-week horizon)
-
-Cashflow risk identification
-
-Client & product cash contribution analysis
-
-Treasury visibility and deal cash dependency
-
-🖼️ Database Schema
-
-Upload your schema screenshot and update the path below.
-
-![Database Schema](images/db_schema.png)
+---
 
 ## 📘 2. Power BI Cashflow Dashboard
 
 An interactive financial reporting interface built on top of the cashflow SQL model.
 
-Dashboard 12 week Finance Model
+### Dashboard – 12 Week Finance Model
 
 ![12 Week DB Overview](./images/12_week_db_overview.png)
 
-Dashboard Highlights
+### Dashboard Highlights
 
-Executive KPI summary (Net Cash, Inflow, Outflow, etc.)
+- Executive KPI summary (Net Cash, Inflow, Outflow, etc.)
+- Weekly inflow/outflow patterns
+- Cumulative liquidity curve
+- Client profitability and deal status comparison
+- Deal-level performance table with GP%, NP%
+- Financial-style matrix with conditional formatting
 
-Weekly inflow/outflow patterns
-
-Cumulative liquidity curve
-
-Client profitability and deal status comparison
-
-Deal-level performance table with GP%, NP%
-
-Financial-style matrix with conditional formatting
+---
 
 ## 🧮 3. KPI Definitions (DAX)
 
-These DAX measures power the top-level KPI cards.
+### These DAX measures power the top-level KPI cards.
 
+```dax
 Total Inflow :=
 CALCULATE(
     SUM(cashflow_12week[weekly_amount]),
@@ -110,62 +95,51 @@ MAXX(
 
 Active Deals :=
 DISTINCTCOUNT(cashflow_12week[deal_no])
+```
+
+---
 
 ## 📊 4. Dashboard Visuals Explained
-KPI Summary Bar
 
-Shows the overall cashflow strength and deal activity in the 12-week window.
+### KPI Summary Bar  
+Shows overall cashflow strength and deal activity in the 12-week window.
 
-Net Cash & Cumulative Curve
-
+### Net Cash & Cumulative Curve  
 Combined column + line view:
+- Weekly net cash  
+- Running liquidity balance  
+- Inflection points and recovery periods  
 
-Weekly net cash
-
-Running liquidity balance
-
-Inflection points and recovery periods
-
-12-Week Cashflow Matrix
-
-A financial-style breakdown (Inflow, Outflow, Net).
+### 12-Week Cashflow Matrix  
+A financial-style breakdown (Inflow, Outflow, Net).  
 Conditional formatting highlights positive vs negative weekly totals.
 
-Profit Per Client & Deal Status
-
+### Profit Per Client & Deal Status  
 Client ranking based on Profit After Finance Cost, split by WON/LOST deals.
 
-Deal Performance Table
-
-Deal-level metrics including:
-
-Sales
-
-Gross Profit
-
-GP%
-
-NP%
-
-Client, Product, Sales Rep
+### Deal Performance Table  
+Includes:
+- Sales  
+- Gross Profit  
+- GP%  
+- NP%  
+- Client, Product, Sales Rep  
 
 Useful for bottom-up analysis.
 
+---
+
 ## 🔄 5. Cashflow Generation Workflow
 
-SQL computes deposit, balance, uplift, travel, and payment dates
+- SQL computes deposit, balance, uplift, travel, and payment dates  
+- All events converted into cashflow movements  
+- Weekly buckets generated using ISO week logic  
+- 12-week rolling window exposed to Power BI  
+- DAX performs KPIs, formatting, and cumulative logic  
 
-All events converted into cashflow movements
+---
 
-Weekly buckets generated using ISO week logic
+## 🔒 Data Notice
 
-12-week rolling window exposed to Power BI
-
-DAX performs KPIs, formatting, and cumulative logic
-
-🔒 Data Notice
-
-All data is fully synthetic and anonymised.
-
-The structure and behaviour reflect real business logic for demonstration purposes only.
-
+All data is fully synthetic and anonymised.  
+Structure and behaviour reflect real business logic for demonstration purposes only.
