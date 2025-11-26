@@ -50,14 +50,62 @@ An interactive financial reporting interface built on top of the cashflow SQL mo
 
 ![12 Week DB Overview](./images/12_week_db_overview.png)
 
-### Dashboard Highlights
+### 📊 12-Week Rolling Cashflow Dashboard
+
+Dashboard Highlights
 
 - Executive KPI summary (Net Cash, Inflow, Outflow, etc.)
 - Weekly inflow/outflow patterns
 - Cumulative liquidity curve
-- Client profitability and deal status comparison
-- Deal-level performance table with GP%, NP%
-- Financial-style matrix with conditional formatting
+- Deal-level breakdown for the selected trader
+- Treasury-style cashflow matrix with conditional formatting
+- Ability to filter by client, product, or deal
+
+![12 Week DB Overview](./images/Overview_Dashboard.png)
+
+### 📦 Deal Performance Dashboard
+
+Dashboard Highlights
+
+- Total Sales, Gross Profit, Net Profit After Finance Costs
+- Top 10 most profitable deals (bar chart)
+- Sales vs Gross Profit % (scatter for deal quality)
+- Deal timeline: Days to Quote → Days to Win
+- Deal profitability table showing GP%, NP%, product mix, and client
+- Ideal for analysing commercial performance per trader
+
+![12 Week DB Overview](./images/Deal_Dashboard.png)
+
+### 🧑‍🤝‍🧑 Client Performance Dashboard
+
+Dashboard Highlights
+
+- Profit per client with Lost vs Won comparison
+- Client × Product profitability heatmap
+- Client deal lifecycle speed (Days to Quote / Days to Win)
+- Profit contribution per client (donut visual)
+- Helps identify top clients and underperforming relationships
+
+![12 Week DB Overview](./images/Client_Dashboard.png)
+
+### 📦 Product Performance Dashboard
+
+Dashboard Highlights
+
+- Profitability by product with segmentation across deal statuses
+- Product × Client heatmap revealing strong and weak product lines
+- Deal timeline by product (sales velocity)
+- Total profit contribution by product group
+- Supports product strategy and pricing decisions
+
+![12 Week DB Overview](./images/Product_Dashboard.png)
+
+### 📝 Executive Summary
+
+These four dashboards provide a full commercial and financial performance overview
+They cover cashflow, deals, clients, and product behaviour end-to-end
+Built using a fully normalised MySQL backend and Power BI data model
+All data is synthetic but reflects realistic commercial scenarios
 
 ---
 
@@ -143,3 +191,4 @@ Useful for bottom-up analysis.
 
 All data is fully synthetic and anonymised.  
 Structure and behaviour reflect real business logic for demonstration purposes only.
+
