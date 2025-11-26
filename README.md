@@ -120,6 +120,8 @@ This repository includes two major analytical models powering dashboards used by
 
 A forecasting model that projects cash inflows, cash outflows, and net cash over the next 12 weeks, per deal.
 
+Further Dashboard Details in 12 Week DB Overview Folder
+
 ![12 Week DB Overview](./12_week_cashflow_model/images/12_week_db_overview.png)
 
 ---
@@ -228,5 +230,6 @@ It demonstrates capability across:
 - End-to-end system integration  
 
 Perfect for operational analytics, finance teams, and production-scale reporting environments.
+
 
 
