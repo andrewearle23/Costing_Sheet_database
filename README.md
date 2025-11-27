@@ -37,7 +37,7 @@ This architecture supports finance, sales, and operations by providing **a singl
 
 ## 🧩 Key Components
 
-###1️⃣ Excel Costing Workbook
+### 1️⃣ Excel Costing Workbook
 
 ✔ Automated costing template built with Power Query  
 ✔ 40+ VBA modules (quoting, PDF export, Outlook emails, sheet protection, logging)  
@@ -230,6 +230,7 @@ It demonstrates capability across:
 - End-to-end system integration  
 
 Perfect for operational analytics, finance teams, and production-scale reporting environments.
+
 
 
 
