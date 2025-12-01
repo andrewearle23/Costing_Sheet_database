@@ -17,20 +17,6 @@ Each stage is logged and tracked for data integrity.
 
 ---
 
-## ⚙️ Project Structure
-📦 ETL_Monday_MySQL
-│
-├── etl_script.py # Main ETL pipeline
-├── README.md # Project documentation
-├── requirements.txt # Python dependencies
-├── /deal_excels/ # Folder with Excel deal data
-└── /logs/ # Generated log files
-
-markdown
-Copy code
-
----
-
 ## 🧠 Key Features
 - ✅ Extracts deal data directly from **Monday.com GraphQL API**
 - ✅ Integrates with **Excel workbooks** for cost and sales data
@@ -177,4 +163,5 @@ Add notification integration (Slack/Email) for ETL completion
 Containerize pipeline using Docker
 
 📜 License
+
 This project is open source and available under the MIT License.
