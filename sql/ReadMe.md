@@ -1,7 +1,7 @@
 # 🏗️ Supply Chain Costing Database
 
-A relational **MySQL 8.0** database designed to manage and analyze supply chain cost structures, including product pricing, logistics, and deal profitability.  
-This database forms the backend foundation for data analysis, Power BI dashboards, and integration with external systems (e.g., Monday.com or Excel data pipelines).
+A relational MySQL database designed to manage and analyze supply chain cost structures, including product pricing, logistics, and deal profitability.  
+This database forms the backend foundation for data analysis, Power BI dashboards, and integration with external systems (Monday.com or Excel data pipelines).
 
 ---
 
@@ -69,23 +69,7 @@ The schema is normalized to **3rd Normal Form (3NF)** and includes key functiona
 
 ## 🧱 Entity Relationship Diagram (ERD)
 
-### 📊 Text-Based ERD (Quick View)
-
-[client]──< [deal] >──[sales_rep]
-│ │ │
-│ │ ├──< [deal_sales_line] >──[product]──< [stock_item]
-│ │ ├──< [deal_stock_cost]
-│ │ ├──< [deal_transport_cost] >──[transport_company]
-│ │ ├──< [deal_cash_inflow]
-│ │ ├──< [deal_cash_outflow]
-│ │ └──< [deal_ad_hoc_cost] >──[ad_hoc_cost_type]
-│
-├──< [city] >──[country]
-│
-└──< [location]
-
-
-### 🖼️ Visual ERD 
+### 🖼️ ERD 
 
 ![ERD Diagram](erd_diagram.png)
 
@@ -101,4 +85,5 @@ The schema is normalized to **3rd Normal Form (3NF)** and includes key functiona
 5. **Profit Calculated** → Derived from sales vs. total cost fields  
 
 ---
+
 
