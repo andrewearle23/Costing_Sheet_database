@@ -174,37 +174,7 @@ The workbook uses **VBA automation modules (Modules 1–41)** for complete contr
 
 ---
 
-## 🧱 System Architecture (Simplified Flow)
 
-```mermaid
-graph TD
-A[Excel User Input] --> B[Stock / Transport / Ad-Hoc Tables]
-B --> C[Power Query Transform]
-C --> D[Combined Cost Table]
-D --> E[Finance Model]
-E --> F[Selling Price + Gross Profit]
-F --> G[Quote Sheets]
-G --> H[VBA PDF Export + Email]
-H --> I[Quote Register (Log)]
-🧩 Impact
-Reduced costing errors and inconsistencies
-
-Streamlined quoting process from hours to minutes
-
-Improved visibility into deal profitability
-
-Enhanced collaboration between Finance, Sales, and Operations
-
-Fully auditable cost and quote history
-
-🧰 Technologies Used
-Category	Tools / Technologies
-Core Application	Microsoft Excel
-Automation	VBA (41 custom modules)
-ETL / Data Prep	Power Query (M Language)
-Database	SAP SQL Server Queries
-Reporting / Output	PDF, Outlook Email Integration
-Security	Sheet Protection + Controlled Access
 
 
 
