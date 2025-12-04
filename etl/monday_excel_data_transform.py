@@ -5,7 +5,7 @@ import mysql.connector
 import logging
 from datetime import datetime
 
-# === CONFIGURATION ===
+# Configuration
 MONDAY_API_KEY = "YOUR_MONDAY_API_TOKEN"
 BOARD_ID = 123456789  # Monday board ID
 EXCEL_FOLDER = r"C:\path\to\deal_excels"
@@ -18,7 +18,7 @@ DB_CONFIG = {
     "database": "your_database"
 }
 
-# === LOGGING SETUP ===
+# Logging Setup
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
@@ -26,7 +26,7 @@ logging.basicConfig(
 )
 logging.info("ETL process started")
 
-# === STEP 1: FETCH MONDAY.COM DEAL DATA ===
+# Fetch Monday.com Data
 def fetch_monday_items(board_id):
     items, cursor = [], None
     headers = {"Authorization": MONDAY_API_KEY, "Content-Type": "application/json"}
@@ -54,7 +54,7 @@ def fetch_monday_items(board_id):
     return items
 
 
-# === STEP 2: LOAD MONDAY.COM DATA ===
+# Load Monday.com Data
 monday_items = fetch_monday_items(BOARD_ID)
 columns_needed = [
     "Client", "Product", "Sales Rep", "Deal Status",
@@ -65,7 +65,7 @@ monday_df = pd.DataFrame([
     for i in monday_items
 ])
 
-# === STEP 3: MYSQL CONNECTION AND LOOKUPS ===
+# MySQL Connection and Lookups
 conn = mysql.connector.connect(**DB_CONFIG)
 cursor = conn.cursor(dictionary=True)
 
@@ -85,7 +85,7 @@ ad_hoc_lookup = load_lookup("ad_hoc", "ad_hoc_id", "ad_hoc_name")
 
 def safe_lookup(dic, val): return None if pd.isna(val) else dic.get(str(val).strip())
 
-# === STEP 4: LOOP THROUGH EXCEL FILES ===
+# Loop through excel Files
 files = [f for f in os.listdir(EXCEL_FOLDER) if f.endswith((".xlsx", ".xls"))]
 total = {"deals":0,"stock":0,"transport":0,"adhoc":0,"sales":0,"outflow":0,"inflow":0}
 
@@ -94,7 +94,7 @@ for f in files:
     logging.info(f"📄 Processing {f}")
 
     try:
-        # === DEAL OVERVIEW ===
+        # Deal Overview
         deal = pd.read_excel(path, sheet_name="deal_overview").rename(columns={"Deal Number": "Name"})
         merged = monday_df.merge(deal, on="Name", how="left")
         merged["sales_rep_id"] = merged["Sales Rep"].apply(lambda x: safe_lookup(sales_rep_lookup, x))
@@ -129,7 +129,7 @@ for f in files:
         for _, r in merged.iterrows(): cursor.execute(sql_deal, r.to_dict())
         total["deals"] += len(merged)
 
-        # === STOCK COST ===
+        # Stock Cost
         stock = pd.read_excel(path, sheet_name="stock_cost").rename(columns={
             "Deal Number":"deal_no","Stock Code":"stock_ref","Product Name":"product_name",
             "UoM":"uom_name","Quantity":"quantity","Price":"unit_price","Total Cost":"total_cost"})
@@ -143,7 +143,7 @@ for f in files:
         for _, r in stock.iterrows(): cursor.execute(sql_stock, r.to_dict())
         total["stock"] += len(stock)
 
-        # === TRANSPORT COST ===
+        # Transport Cost
         transport = pd.read_excel(path, sheet_name="transport_cost").rename(columns={
             "Transporter":"transport_name","Deal No.":"deal_no","Collection Point":"collection_name",
             "Delivery Point":"delivery_name","Quantity":"quantity","Quant Per Truck":"quantity_per_truck",
@@ -163,7 +163,7 @@ for f in files:
         for _, r in transport.iterrows(): cursor.execute(sql_transport, r.to_dict())
         total["transport"] += len(transport)
 
-        # === AD HOC COST ===
+        # Ad Hoc Cost
         adhoc = pd.read_excel(path, sheet_name="ad_hoc_cost").rename(columns={
             "Deal No.":"deal_no","AD Hoc Cost":"ad_hoc_name","UoM":"uom_name",
             "Quantity":"quantity","Price":"unit_price","Total Cost":"total_cost"})
@@ -177,7 +177,7 @@ for f in files:
         for _, r in adhoc.iterrows(): cursor.execute(sql_adhoc, r.to_dict())
         total["adhoc"] += len(adhoc)
 
-        # === SALES LINES ===
+        # Sales Lines
         sales = pd.read_excel(path, sheet_name="sales_tbl_One").rename(columns={
             "Type":"line_type","Product":"product_name","UoM":"uom_name","Quantity":"quantity",
             "Purchase Price":"purchase_price","Sales Price":"sales_price","GP Price":"gp_price","GP %":"gp_pct",
@@ -200,7 +200,7 @@ for f in files:
         for _, r in sales.iterrows(): cursor.execute(sql_sales, r.to_dict())
         total["sales"] += len(sales)
 
-        # === CASH OUTFLOW ===
+        # Cash Outflow
         outflow = pd.read_excel(path, sheet_name="cf_purch").rename(columns={
             "Stock Code":"stock_ref","UoM":"uom_name","Quantity":"quantity",
             "Purch Cost":"purchase_price","Deposit %":"deposit_pct","Deposit Date":"deposit_date",
@@ -220,7 +220,7 @@ for f in files:
         for _, r in outflow.iterrows(): cursor.execute(sql_outflow, r.to_dict())
         total["outflow"] += len(outflow)
 
-        # === CASH INFLOW ===
+        # Cash Inflow
         inflow = pd.read_excel(path, sheet_name="cf_sales").rename(columns={
             "Deal No.":"deal_no","UoM":"uom_name","Quantity":"quantity","Sales Price":"sales_price",
             "Deposit%":"deposit_pct","Deposit Date":"deposit_date","Uplift Start":"uplift_start",
@@ -249,6 +249,7 @@ cursor.close()
 conn.close()
 logging.info(f"ETL Complete — Deals:{total['deals']} Stock:{total['stock']} Transport:{total['transport']} AdHoc:{total['adhoc']} Sales:{total['sales']} Outflow:{total['outflow']} Inflow:{total['inflow']}")
 logging.info(f"📄 Log saved to {LOG_FILE}")
+
 
 
 
